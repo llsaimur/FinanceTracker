@@ -1,0 +1,45 @@
+﻿@page
+@model FinanceTrackerUI.Pages.Accounts.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4">Login</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Model.ErrorMessage</div>
+                }
+                @if (Model.SuccessMessage != null)
+                {
+                    <div class="alert alert-success">@Model.SuccessMessage</div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="LoginRequest.Email" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="LoginRequest.Password" class="form-control" required />
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <span>Don't have an account?</span>
+                    <a asp-page="/Accounts/Register" class="btn btn-link">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

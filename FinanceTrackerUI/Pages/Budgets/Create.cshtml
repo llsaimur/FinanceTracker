@@ -1,0 +1,50 @@
+﻿@page
+@model FinanceTrackerUI.Pages.Budgets.CreateModel
+@{
+    ViewData["Title"] = "Create Budget";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4">New Budget</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Html.Raw(Model.ErrorMessage)</div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Budget.Category" class="form-label">Category</label>
+                        <input asp-for="Budget.Category" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Budget.Limit" class="form-label">Limit ($)</label>
+                        <input asp-for="Budget.Limit" class="form-control" type="number" step="0.01" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Budget.StartDate" class="form-label">Start Date</label>
+                        <input asp-for="Budget.StartDate" class="form-control" type="date" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Budget.EndDate" class="form-label">End Date</label>
+                        <input asp-for="Budget.EndDate" class="form-control" type="date" required />
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Create Budget</button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-page="/Budgets/Index" class="btn btn-link">Back to Budgets</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

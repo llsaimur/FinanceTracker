@@ -1,0 +1,87 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Welcome to FinanceTracker";
+    var isAuthenticated = HttpContext.Session.GetString("auth_token") != null;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-8 text-center">
+            <img src="~/images/undraw_savings_uwjn.svg" class="img-fluid mb-4" alt="Finance Illustration" style="max-height: 280px;" />
+
+            <h1 class="display-5 fw-bold">Welcome to FinanceTracker</h1>
+            <p class="lead">Track your accounts, transactions, and budgets — all in one place.</p>
+
+            @if (!isAuthenticated)
+            {
+                <div class="mt-4">
+                    <a asp-page="/Accounts/Login" class="btn btn-primary btn-lg me-2">Login</a>
+                    <a asp-page="/Accounts/Register" class="btn btn-outline-secondary btn-lg">Register</a>
+                </div>
+            }
+            else
+            {
+                <div class="mt-4">
+                    <a asp-page="/Accounts/Index" class="btn btn-success btn-lg mb-4">
+                        <i class="bi bi-bank"></i> Go to Accounts
+                    </a>
+
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-md-5">
+                            <div class="card border-danger shadow-sm">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-danger"><i class="bi bi-arrow-down-circle"></i> Total Spent</h6>
+                                    <h4 class="fw-bold text-danger">@Model.TotalSpent.ToString("C2")</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card border-primary shadow-sm">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-primary"><i class="bi bi-flag-fill"></i> Total Budget Goal</h6>
+                                    <h4 class="fw-bold text-primary">@Model.TotalBudget.ToString("C2")</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.BudgetSummaries.Any())
+                    {
+                        <div class="mt-5 text-start">
+                            <h4 class="mb-3"><i class="bi bi-speedometer2"></i> Budget Progress</h4>
+
+                            @foreach (var summary in Model.BudgetSummaries)
+                            {
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>@summary.Category</strong>
+                                        <span class="text-muted">@summary.Spent.ToString("C2") / @summary.Limit.ToString("C2")</span>
+                                    </div>
+
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar @(summary.PercentUsed >= 100 ? "bg-danger" : summary.PercentUsed >= 80 ? "bg-warning text-dark" : "bg-success")"
+                                             role="progressbar"
+                                             style="width: @(Math.Min(summary.PercentUsed, 100).ToString("0"))%;"
+                                             aria-valuenow="@summary.PercentUsed.ToString("0")"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100">
+                                            @summary.PercentUsed.ToString("0")%
+                                        </div>
+                                    </div>
+
+                                    <small class="badge mt-1
+                                        @(summary.Status == "Exceeded" ? "bg-danger" :
+                                          summary.Status == "Near Limit" ? "bg-warning text-dark" :
+                                          "bg-success")">
+                                        @summary.Status
+                                    </small>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

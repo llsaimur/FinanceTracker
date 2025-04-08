@@ -1,0 +1,53 @@
+﻿@page
+@model FinanceTrackerUI.Pages.Accounts.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4">Register</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Html.Raw(Model.ErrorMessage)</div>
+                }
+                @if (Model.SuccessMessage != null)
+                {
+                    <div class="alert alert-success">@Model.SuccessMessage</div>
+                }
+
+                <form method="post" novalidate>
+                    <div class="mb-3">
+                        <label asp-for="RegisterRequest.Username" class="form-label">Username</label>
+                        <input asp-for="RegisterRequest.Username" class="form-control" />
+                        <span asp-validation-for="RegisterRequest.Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RegisterRequest.Email" class="form-label">Email</label>
+                        <input asp-for="RegisterRequest.Email" class="form-control" />
+                        <span asp-validation-for="RegisterRequest.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RegisterRequest.Password" class="form-label">Password</label>
+                        <input asp-for="RegisterRequest.Password" type="password" class="form-control" />
+                        <span asp-validation-for="RegisterRequest.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <span>Already have an account?</span>
+                    <a asp-page="/Accounts/Login" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

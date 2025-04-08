@@ -1,0 +1,36 @@
+﻿@page "{id}"
+@model FinanceTrackerUI.Pages.Budgets.DeleteModel
+@{
+    ViewData["Title"] = "Delete Budget";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center text-danger mb-4">Delete Budget</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Model.ErrorMessage</div>
+                }
+
+                @if (Model.Budget != null)
+                {
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Are you sure you want to delete this budget?</strong>
+                        <hr />
+                        <p><strong>Category:</strong> @Model.Budget.Category</p>
+                        <p><strong>Limit:</strong> @Model.Budget.Limit.ToString("C2")</p>
+                        <p><strong>Period:</strong> @Model.Budget.StartDate.ToShortDateString() → @Model.Budget.EndDate.ToShortDateString()</p>
+                    </div>
+
+                    <form method="post" class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a asp-page="/Budgets/Index" class="btn btn-outline-secondary">Cancel</a>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

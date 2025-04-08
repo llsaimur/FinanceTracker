@@ -1,0 +1,85 @@
+﻿@page
+@model FinanceTrackerUI.Pages.Accounts.IndexModel
+@{
+    ViewData["Title"] = "My Accounts";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm rounded-4 p-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="mb-0"><i class="bi bi-wallet2"></i> My Accounts</h3>
+                    <a asp-page="/Accounts/Create" class="btn btn-success">
+                        <i class="bi bi-plus-lg"></i> Create New Account
+                    </a>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger">@Model.ErrorMessage</div>
+                }
+
+                @if (Model.Accounts.Count == 0 && string.IsNullOrWhiteSpace(Model.ErrorMessage))
+                {
+                    <div class="alert alert-info text-center">
+                        <i class="bi bi-bank"></i> No accounts found.
+                        <br />
+                        <a asp-page="/Accounts/Create" class="btn btn-outline-primary mt-3">
+                            <i class="bi bi-plus-circle"></i> Create Your First Account
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-dark text-center">
+                            <tr>
+                                <th>Account Name</th>
+                                <th>Type</th>
+                                <th>Balance</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var account in Model.Accounts)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@account.Name</td>
+
+                                    <td>
+                                        <span class="badge
+                                            @(account.Type == "Chequing" ? "bg-primary" :
+                                              account.Type == "Savings" ? "bg-success" :
+                                              account.Type == "Trading" ? "bg-warning text-dark" : "bg-secondary")">
+                                            @account.Type
+                                        </span>
+                                    </td>
+
+                                    <td class="text-end fw-semibold @(account.Balance < 0 ? "text-danger" : "text-success")">
+                                        @(account.Balance < 0
+                                            ? "-" + Math.Abs(account.Balance).ToString("C2")
+                                            : account.Balance.ToString("C2"))
+                                    </td>
+
+                                    <td class="text-end">
+                                        <a asp-page="/Accounts/Edit" asp-route-id="@account.Id"
+                                           class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a asp-page="/Accounts/Delete" asp-route-id="@account.Id"
+                                           onclick="return confirm('Are you sure you want to delete this account?');"
+                                           class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@page "{id}"
+@model FinanceTrackerUI.Pages.Transactions.DetailsModel
+@{
+    ViewData["Title"] = "Transaction Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4 text-primary">💳 Transaction Details</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Model.ErrorMessage</div>
+                }
+                else if (Model.Transaction != null)
+                {
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 text-muted">📅 Date</dt>
+                        <dd class="col-sm-8">@Model.Transaction.Date.ToString("yyyy-MM-dd")</dd>
+
+                        <dt class="col-sm-4 text-muted">🏦 Account</dt>
+                        <dd class="col-sm-8">@Model.Transaction.AccountName</dd>
+
+                        <dt class="col-sm-4 text-muted">💰 Amount</dt>
+                        <dd class="col-sm-8 text-success fw-bold">@Model.Transaction.Amount.ToString("C2")</dd>
+
+                        <dt class="col-sm-4 text-muted">🏷️ Category</dt>
+                        <dd class="col-sm-8">@Model.Transaction.Category</dd>
+
+                        <dt class="col-sm-4 text-muted">📝 Description</dt>
+                        <dd class="col-sm-8">@Model.Transaction.Description</dd>
+                    </dl>
+                }
+
+                <div class="text-center mt-4">
+                    <a asp-page="/Transactions/Index" class="btn btn-outline-secondary">Back to Transactions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

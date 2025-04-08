@@ -1,0 +1,66 @@
+﻿@page
+@model FinanceTrackerUI.Pages.Transactions.CreateModel
+@{
+    ViewData["Title"] = "Create Transaction";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4">New Transaction</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Html.Raw(Model.ErrorMessage)</div>
+                }
+
+                @if (Model.SuccessMessage != null)
+                {
+                    <div class="alert alert-success">@Model.SuccessMessage</div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label asp-for="Transaction.AccountId" class="form-label">Account</label>
+                        <select asp-for="Transaction.AccountId" class="form-select" required>
+                            <option value="">-- Select Account --</option>
+                            @foreach (var account in Model.UserAccounts)
+                            {
+                                <option value="@account.Id">@account.Name (@account.Type)</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Transaction.Amount" class="form-label">Amount</label>
+                        <input asp-for="Transaction.Amount" type="number" step="0.01" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Transaction.Category" class="form-label">Category</label>
+                        <input asp-for="Transaction.Category" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Transaction.Date" class="form-label">Date</label>
+                        <input asp-for="Transaction.Date" type="date" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Transaction.Description" class="form-label">Description</label>
+                        <textarea asp-for="Transaction.Description" class="form-control"></textarea>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Add Transaction</button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-page="/Transactions/Index" class="btn btn-link">Back to Transactions</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

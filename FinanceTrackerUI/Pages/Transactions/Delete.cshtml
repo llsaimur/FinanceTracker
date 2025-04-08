@@ -1,0 +1,38 @@
+﻿@page "{id}"
+@model FinanceTrackerUI.Pages.Transactions.DeleteModel
+@{
+    ViewData["Title"] = "Delete Transaction";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center text-danger mb-4">Delete Transaction</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Model.ErrorMessage</div>
+                }
+
+                @if (Model.Transaction != null)
+                {
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Are you sure you want to delete this transaction?</strong>
+                        <hr />
+                        <p><strong>Account:</strong> @Model.Transaction.AccountName</p>
+                        <p><strong>Date:</strong> @Model.Transaction.Date.ToShortDateString()</p>
+                        <p><strong>Amount:</strong> @Model.Transaction.Amount.ToString("C2")</p>
+                        <p><strong>Category:</strong> @Model.Transaction.Category</p>
+                        <p><strong>Description:</strong> @Model.Transaction.Description</p>
+                    </div>
+
+                    <form method="post" class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a asp-page="/Transactions/Index" class="btn btn-outline-secondary">Cancel</a>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

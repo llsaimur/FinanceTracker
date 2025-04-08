@@ -1,0 +1,56 @@
+﻿@page "{id}"
+@model FinanceTrackerUI.Pages.Accounts.EditModel
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded-4 p-4">
+                <h2 class="text-center mb-4">Edit Account</h2>
+
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@Html.Raw(Model.ErrorMessage)</div>
+                }
+
+                @if (Model.SuccessMessage != null)
+                {
+                    <div class="alert alert-success">@Model.SuccessMessage</div>
+                }
+
+                <form method="post">
+                    <input type="hidden" asp-for="UpdateRequest.AccountId" />
+
+                    <div class="mb-3">
+                        <label asp-for="UpdateRequest.Name" class="form-label">Account Name</label>
+                        <input asp-for="UpdateRequest.Name" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UpdateRequest.Type" class="form-label">Account Type</label>
+                        <select asp-for="UpdateRequest.Type" class="form-select">
+                            <option value="Chequing">Chequing</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Trading">Trading</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="UpdateRequest.Balance" class="form-label">Balance</label>
+                        <input asp-for="UpdateRequest.Balance" class="form-control" type="number" step="0.01" />
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Update Account</button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a asp-page="/Accounts/Index" class="btn btn-link">Back to Accounts</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
